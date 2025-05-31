@@ -47,12 +47,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\OneDrive\Рабочий стол\Important\SCPSL-DLLs\SCP Secret Laboratory-14.0.0\CommandSystem.Core.dll</HintPath>
     </Reference>
-    <Reference Include="LabApi">
-      <HintPath>..\..\..\..\..\OneDrive\Рабочий стол\Important\SCPSL-DLLs\SCP Secret Laboratory-14.0.0\LabApi.dll</HintPath>
-    </Reference>
-    <Reference Include="Mirror, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\OneDrive\Рабочий стол\Important\SCPSL-DLLs\SCP Secret Laboratory-14.0.0\Mirror.dll</HintPath>
+    <Reference Include="LabApi_publicized">
+      <HintPath>..\..\..\..\..\OneDrive\Рабочий стол\Important\SCPSL-DLLs\Other\LabApi_publicized.dll</HintPath>
     </Reference>
     <Reference Include="Mirror_publicized, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -88,6 +84,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Patches\BroadcastToConnectionPatch.cs" />
+    <Compile Include="Patches\AddPlayerPatch.cs" />
     <Compile Include="Patches\NetPeerPatch.cs" />
     <Compile Include="Patches\NetPacketPatch.cs" />
     <Compile Include="Patches\OnTransportDataPath.cs" />
