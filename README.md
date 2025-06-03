@@ -5,7 +5,7 @@
 ![Downloads](https://img.shields.io/github/downloads/angelseraphim/AntiSLCrush/total?label=Downloads&color=333333&style=for-the-badge)
 
 ---
-AntiSLCrush plugin for LabApi is needed so that your server does not break due to null in observing list :)
+The AntiSLCrush plugin for LabApi is needed so that your server does not break due to errors from game developers/bugs/ddos attacks :)
 ---
 
 Installation
