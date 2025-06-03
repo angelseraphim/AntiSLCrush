@@ -12,3 +12,5 @@ Installation
 Download the latest release from the Releases page.
 Place the DLL file in LabApi directory.
 Configure config.yml as needed.
+
+(The plugin has no licenses or restrictions, so you can take parts of the code)
