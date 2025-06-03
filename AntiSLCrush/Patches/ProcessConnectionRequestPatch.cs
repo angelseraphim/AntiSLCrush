@@ -3,26 +3,26 @@ using LabApi.Features.Console;
 using LiteNetLib;
 using System;
 using System.Collections.Generic;
-using System.Net;
 
 namespace AntiSLCrush.Patches
 {
     [HarmonyPatch(typeof(CustomLiteNetLib4MirrorTransport), nameof(CustomLiteNetLib4MirrorTransport.ProcessConnectionRequest))]
     internal class ProcessConnectionRequestPatch
     {
-        private static readonly HashSet<IPAddress> ipBlackList = new HashSet<IPAddress>();
+        private static readonly HashSet<string> bannedIp = new HashSet<string>();
 
         public static bool Prefix(CustomLiteNetLib4MirrorTransport __instance, ConnectionRequest request)
         {
-            IPAddress ip = request.RemoteEndPoint.Address;
+            string ip = request.RemoteEndPoint.Address.ToString();
 
-            if (ipBlackList.Contains(ip))
+            if (bannedIp.Contains(ip))
             {
                 CustomLiteNetLib4MirrorTransport.RequestWriter.Reset();
                 CustomLiteNetLib4MirrorTransport.RequestWriter.Put((byte)12);
                 request.RejectForce(CustomLiteNetLib4MirrorTransport.RequestWriter);
-                Logger.Warn($"AntiSLCrush: Banned ip {ip} rejected as bot.");
-                return false;
+
+                if (Main.config.ShowAntoDDoSLogs)
+                    Logger.Warn($"Banned IP {ip} rejected as bot");
             }
 
             int rawBytes = request.Data.AvailableBytes;
@@ -35,8 +35,13 @@ namespace AntiSLCrush.Patches
                 CustomLiteNetLib4MirrorTransport.RequestWriter.Reset();
                 CustomLiteNetLib4MirrorTransport.RequestWriter.Put((byte)12);
                 request.RejectForce(CustomLiteNetLib4MirrorTransport.RequestWriter);
-                ipBlackList.Add(ip);
-                Logger.Warn($"AntiSLCrush: Too short handshake packet ({array.Length} bytes) from {ip} rejected as bot.");
+
+                if (Main.config.BanIp)
+                    bannedIp.Add(ip);
+
+                if (Main.config.ShowAntoDDoSLogs)
+                    Logger.Warn($"Too short handshake packet ({array.Length} bytes) from {ip} rejected as bot.");
+
                 return false;
             }
 

@@ -83,6 +83,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Config.cs" />
     <Compile Include="Patches\BroadcastToConnectionPatch.cs" />
     <Compile Include="Patches\AddPlayerPatch.cs" />
     <Compile Include="Patches\NetPeerPatch.cs" />
