@@ -24,14 +24,14 @@ namespace AntiSLCrush.Patches
 
                 if (Main.config.ShowBannedIpLogs)
                     Logger.Warn($"Banned IP {ip} rejected as bot");
+
+                return false;
             }
 
-            int rawBytes = request.Data.AvailableBytes;
+            //byte[] array = new byte[request.Data.AvailableBytes];
+            //Buffer.BlockCopy(request.Data._data, request.Data._position, array, 0, request.Data.AvailableBytes);
 
-            byte[] array = new byte[rawBytes];
-            Buffer.BlockCopy(request.Data._data, request.Data._position, array, 0, request.Data.AvailableBytes);
-
-            if (array.Length < 50)
+            if (request.Data.AvailableBytes < 50)
             {
                 CustomLiteNetLib4MirrorTransport.RequestWriter.Reset();
                 CustomLiteNetLib4MirrorTransport.RequestWriter.Put((byte)12);
@@ -41,7 +41,7 @@ namespace AntiSLCrush.Patches
                     bannedIp.Add(ip);
 
                 if (Main.config.ShowSuspiciousPacketLogs)
-                    Logger.Warn($"Too short handshake packet ({array.Length} bytes) from {ip} rejected as bot.");
+                    Logger.Warn($"Too short handshake packet ({request.Data.AvailableBytes} bytes) from {ip} rejected as bot.");
 
                 filteretConnectionCount++;
 
