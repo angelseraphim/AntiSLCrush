@@ -8,6 +8,8 @@ namespace AntiSLCrush.Patches
     [HarmonyPatch(typeof(PlayerRoleManager), nameof(PlayerRoleManager.PopulateDummyActions))]
     internal class PopulateDummyActionsPatch
     {
+        internal static int nullCount = 0;
+
         private static bool Prefix(PlayerRoleManager __instance, Action<DummyAction> actionAdder, Action<string> categoryAdder)
         {
             IRootDummyActionProvider[] dummyProviders = __instance._dummyProviders;
@@ -19,6 +21,7 @@ namespace AntiSLCrush.Patches
             {
                 if (dummyProviders[i] == null)
                 {
+                    nullCount++;
                     continue;
                 }
 

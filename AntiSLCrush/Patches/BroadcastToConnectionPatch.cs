@@ -9,7 +9,7 @@ namespace AntiSLCrush.Patches
     [HarmonyPatch(typeof(NetworkServer), nameof(NetworkServer.BroadcastToConnection))]
     internal class BroadcastToConnectionPatch
     {
-        private static int NullConnectionCount = 0;
+        internal static int NullConnectionCount = 0;
 
         private static bool Prefix(NetworkConnectionToClient connection)
         {

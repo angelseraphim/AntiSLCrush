@@ -8,6 +8,8 @@ namespace AntiSLCrush.Patches
     [HarmonyPatch(typeof(NetworkServer), nameof(NetworkServer.OnTransportData))]
     internal class OnTransportDataPath
     {
+        internal static int unknownCount = 0;
+
         private static bool Prefix(int connectionId, ArraySegment<byte> data, int channelId)
         {
             if (!NetworkServer.connections.TryGetValue(connectionId, out var connection))
@@ -16,6 +18,7 @@ namespace AntiSLCrush.Patches
 
                 if (Transport.active != null)
                 {
+                    unknownCount++;
                     Transport.active.ServerDisconnect(connectionId);
                 }
                 else

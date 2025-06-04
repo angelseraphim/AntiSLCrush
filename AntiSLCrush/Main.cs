@@ -1,8 +1,6 @@
 ﻿using HarmonyLib;
 using LabApi.Loader.Features.Plugins;
 using System;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
 
 namespace AntiSLCrush
 {
@@ -14,12 +12,14 @@ namespace AntiSLCrush
         public override Version Version => new Version(2, 3, 2);
         public override Version RequiredApiVersion => new Version(1, 0, 2);
 
+        internal static Main main;
         internal static Config config;
         private static Harmony harmony;
 
         public override void Enable()
         {
-            config = new Config();
+            main = this;
+            config = Config;
             harmony = new Harmony(Name);
 
             harmony.PatchAll();
@@ -29,6 +29,7 @@ namespace AntiSLCrush
         {
             harmony.UnpatchAll();
 
+            main = null;
             config = null;
             harmony = null;
         }
