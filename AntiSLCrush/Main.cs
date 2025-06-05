@@ -9,7 +9,7 @@ namespace AntiSLCrush
         public override string Name => "AntiSLCrush";
         public override string Author => "angelseraphim.";
         public override string Description => "AntiSLCrush";
-        public override Version Version => new Version(2, 4, 3);
+        public override Version Version => new Version(2, 4, 4);
         public override Version RequiredApiVersion => new Version(1, 0, 2);
 
         internal static Main main;
