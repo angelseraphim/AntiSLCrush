@@ -25,7 +25,7 @@ namespace AntiSLCrush.Commands
             builder.AppendLine($"NetworkServer.BroadcastToConnection: {BroadcastToConnectionPatch.NullConnectionCount}");
             builder.AppendLine($"NetworkServer.OnTransportData: {OnTransportDataPath.unknownCount}");
             builder.AppendLine($"PlayerRoleManager.PopulateDummyActions: {PopulateDummyActionsPatch.nullCount}");
-            builder.AppendLine($"AntiSLBots filtered connection count: {ProcessConnectionRequestPatch.filteretConnectionCount}");
+            builder.AppendLine($"AntiSLBots filtered connection count: {ProcessConnectionRequestPatch.filteredConnectionCount}");
 
             response = builder.ToString();
             StringBuilderPool.Shared.Return(builder);
