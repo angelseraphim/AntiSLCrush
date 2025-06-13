@@ -1,6 +1,5 @@
 ﻿using HarmonyLib;
 using LabApi.Features.Console;
-using LabApi.Features.Wrappers;
 using LiteNetLib;
 using System;
 using System.Collections.Generic;
@@ -8,9 +7,9 @@ using System.Collections.Generic;
 namespace AntiSLCrush.Patches
 {
     [HarmonyPatch(typeof(CustomLiteNetLib4MirrorTransport), nameof(CustomLiteNetLib4MirrorTransport.ProcessConnectionRequest))]
-    internal class ProcessConnectionRequestPatch
+    internal static class ProcessConnectionRequestPatch
     {
-        internal static int filteredConnectionCount = 0;
+        internal static int FilteredConnectionCount = 0;
         internal static readonly Dictionary<string, string> IpToHex = new Dictionary<string, string>();
         internal static readonly Dictionary<string, int> MaxSeenHexCount = new Dictionary<string, int>();
         internal static readonly HashSet<string> SeenHex = new HashSet<string>(); // Зачем 3 листа? Так надо.
@@ -29,62 +28,49 @@ namespace AntiSLCrush.Patches
 
                 if (Main.config.BanHex)
                 {
-                    Main.BanHexAtSystemLevel(hex, Server.Port, "Too short handshake packet");
+                    Main.BanHexAtSystemLevel(hex, "Too short handshake packet");
                     return false;
                 }
 
-                if (filteredConnectionCount == 0)
-                {
+                if (FilteredConnectionCount == 0)
                     WebHook.Send($"@everyone Suspicious packet filtered from {ip}! Please inform the plugin author about this data: {hex}");
-                }
 
-                filteredConnectionCount++;
+                FilteredConnectionCount++;
                 return false;
             }
 
-            if (IpToHex.TryGetValue(ip, out var oldHex))
+            if (IpToHex.ContainsKey(ip))
             {
-                if (oldHex != hex)
-                {
-                    IpToHex.Remove(ip);
-                    SeenHex.Remove(oldHex);
-
-                    if (MaxSeenHexCount.ContainsKey(ip))
-                        MaxSeenHexCount.Remove(ip);
-
-                    return true;
-                }
-
                 if (MaxSeenHexCount.TryGetValue(ip, out int count))
                 {
-                    if (count < 5) //I'm too lazy to explain why this is necessary, but it is necessary.
+                    if (count > 20) //I'm too lazy to explain why this is necessary, but it is necessary.
                     {
-                        Main.BanHexAtSystemLevel(hex, Server.Port, "Same HEX from same IP"); //Ну ладно, обьясню на русском. При входе игрок отправляет 2 раза разные HEX, и если одинаковых HEX много, то баним.
+                        Main.BanHexAtSystemLevel(hex, "Too many HEX from same IP"); //Ну ладно, обьясню на русском. При входе игрок отправляет 2 раза разные HEX, и если одинаковых HEX много, то баним.
+                        Main.BanIpAtSystemLevel(ip, "Too many HEX from same IP");
                         return false;
                     }
-                }
 
-                if (!MaxSeenHexCount.ContainsKey(ip))
-                    MaxSeenHexCount[ip] = 1;
-                else
                     MaxSeenHexCount[ip]++;
+                }
+                else
+                {
+                    MaxSeenHexCount[ip] = 1;
+                }
 
                 return true;
             }
 
             if (SeenHex.Contains(hex))
             {
-                if (filteredConnectionCount == 0)
+                if (FilteredConnectionCount == 0)
                 {
                     WebHook.Send($"@everyone Suspicious packet filtered from {ip}! Please inform the plugin author about this data: {hex}");
 
                     if (Main.config.BanHex)
-                    {
-                        Main.BanHexAtSystemLevel(hex, Server.Port, "Same HEX from other IP");
-                    }
+                        Main.BanHexAtSystemLevel(hex, "Same HEX from other IP");
                 }
 
-                filteredConnectionCount++;
+                FilteredConnectionCount++;
                 return false;
             }
 

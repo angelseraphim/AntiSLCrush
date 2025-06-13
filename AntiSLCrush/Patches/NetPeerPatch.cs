@@ -8,7 +8,6 @@ using static HarmonyLib.AccessTools;
 namespace AntiSLCrush.Patches
 {
     [HarmonyPatch(typeof(NetPeer), nameof(NetPeer.ProcessPacket))]
-
     internal static class NetPeerPatch
     {
         private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions, ILGenerator generator)

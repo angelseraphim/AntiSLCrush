@@ -5,7 +5,7 @@ using LiteNetLib;
 namespace AntiSLCrush.Patches
 {
     [HarmonyPatch(typeof(NetPacket), nameof(NetPacket.Verify))]
-    internal class NetPacketPatch
+    internal static class NetPacketPatch
     {
         private static bool Prefix(ref bool __result, NetPacket __instance)
         {
@@ -14,6 +14,7 @@ namespace AntiSLCrush.Patches
                 __result = false;
                 return false;
             }
+
             return true;
         }
     }

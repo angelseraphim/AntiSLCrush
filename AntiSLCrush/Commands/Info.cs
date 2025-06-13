@@ -20,12 +20,12 @@ namespace AntiSLCrush.Commands
             StringBuilder builder = StringBuilderPool.Shared.Rent();
 
             builder.AppendLine("--- AntiSLCrush ---");
-            builder.AppendLine($"Version: {Main.main.Version}");
-            builder.AppendLine($"Player.AddPlayer method fix: {AddPlayerPatch.count}");
+            builder.AppendLine($"Version: {Main.PluginVersion}");
+            builder.AppendLine($"Player.AddPlayer method fix: {AddPlayerPatch.Count}");
             builder.AppendLine($"NetworkServer.BroadcastToConnection: {BroadcastToConnectionPatch.NullConnectionCount}");
-            builder.AppendLine($"NetworkServer.OnTransportData: {OnTransportDataPath.unknownCount}");
-            builder.AppendLine($"PlayerRoleManager.PopulateDummyActions: {PopulateDummyActionsPatch.nullCount}");
-            builder.AppendLine($"AntiSLBots filtered connection count: {ProcessConnectionRequestPatch.filteredConnectionCount}");
+            builder.AppendLine($"NetworkServer.OnTransportData: {OnTransportDataPath.UnknownCount}");
+            builder.AppendLine($"PlayerRoleManager.PopulateDummyActions: {PopulateDummyActionsPatch.NullCount}");
+            builder.AppendLine($"AntiSLBots filtered connection count: {ProcessConnectionRequestPatch.FilteredConnectionCount}");
 
             response = builder.ToString();
             StringBuilderPool.Shared.Return(builder);

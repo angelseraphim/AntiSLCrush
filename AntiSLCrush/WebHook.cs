@@ -1,4 +1,5 @@
 ﻿using LabApi.Features.Console;
+using LabApi.Features.Wrappers;
 using System.Net.Http;
 using System.Text;
 using Utf8Json;
@@ -19,7 +20,15 @@ namespace AntiSLCrush
             {
                 var payload = new
                 {
-                    content = message
+                    embeds = new[]
+                    {
+                        new
+                        {
+                            color = 0x00ff00,
+                            title = Server.IpAddress + ':' + Server.Port,
+                            description = message,
+                        }
+                    }
                 };
 
                 byte[] jsonBytes = JsonSerializer.Serialize(payload);

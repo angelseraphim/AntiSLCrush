@@ -92,6 +92,7 @@
     <Compile Include="Patches\OnTransportDataPath.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Patches\PopulateDummyActionsPatch.cs" />
+    <Compile Include="Patches\PreAuthenticatedPatch.cs" />
     <Compile Include="Patches\ProcessConnectionRequestPatch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebHook.cs" />

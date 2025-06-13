@@ -6,9 +6,9 @@ using System;
 namespace AntiSLCrush.Patches
 {
     [HarmonyPatch(typeof(PlayerRoleManager), nameof(PlayerRoleManager.PopulateDummyActions))]
-    internal class PopulateDummyActionsPatch
+    internal static class PopulateDummyActionsPatch
     {
-        internal static int nullCount = 0;
+        internal static int NullCount = 0;
 
         private static bool Prefix(PlayerRoleManager __instance, Action<DummyAction> actionAdder, Action<string> categoryAdder)
         {
@@ -21,7 +21,7 @@ namespace AntiSLCrush.Patches
             {
                 if (dummyProviders[i] == null)
                 {
-                    nullCount++;
+                    NullCount++;
                     continue;
                 }
 

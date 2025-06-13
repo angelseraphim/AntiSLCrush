@@ -6,9 +6,9 @@ using UnityEngine;
 namespace AntiSLCrush.Patches
 {
     [HarmonyPatch(typeof(NetworkServer), nameof(NetworkServer.OnTransportData))]
-    internal class OnTransportDataPath
+    internal static class OnTransportDataPath
     {
-        internal static int unknownCount = 0;
+        internal static int UnknownCount = 0;
 
         private static bool Prefix(int connectionId, ArraySegment<byte> data, int channelId)
         {
@@ -18,7 +18,7 @@ namespace AntiSLCrush.Patches
 
                 if (Transport.active != null)
                 {
-                    unknownCount++;
+                    UnknownCount++;
                     Transport.active.ServerDisconnect(connectionId);
                 }
                 else
