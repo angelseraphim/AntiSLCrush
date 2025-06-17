@@ -1,6 +1,7 @@
 ﻿using HarmonyLib;
 using LabApi.Features.Console;
 using LiteNetLib;
+using LiteNetLib.Utils;
 using System;
 using System.Collections.Generic;
 
@@ -21,9 +22,16 @@ namespace AntiSLCrush.Patches
             if (Main.BannedIp.Contains(ip))
                 return false;
 
-            byte[] data = new byte[request.Data.AvailableBytes];
-            Buffer.BlockCopy(request.Data._data, request.Data._position, data, 0, request.Data.AvailableBytes);
-            string hex = BitConverter.ToString(data).Replace("-", "");
+            var dataField = typeof(NetDataReader).GetField("_data", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            var dataSizeField = typeof(NetDataReader).GetField("_dataSize", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+
+            byte[] buffer = (byte[])dataField.GetValue(request.Data);
+            int dataSize = (int)dataSizeField.GetValue(request.Data);
+
+            byte[] realData = new byte[dataSize];
+            Buffer.BlockCopy(buffer, 0, realData, 0, dataSize);
+
+            string hex = BitConverter.ToString(realData).Replace("-", "");
 
             if (Main.BannedHEX.Contains(hex))
                 return false;
