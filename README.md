@@ -12,5 +12,12 @@ Installation
 Download the latest release from the Releases page.
 Place the DLL file in LabApi directory.
 Configure config.yml as needed.
+Download IPTables.
+```
+sudo apt install iptables
+```
+
+# ⚠️ATTENTION⚠️
+If your server is not running on a Linux-based system (such as Ubuntu, Debian, etc.) or if you are running the server as a user without sudo privileges, the plugin **will not be able to function correctly**.
 
 (The plugin has no licenses or restrictions, so you can take parts of the code)
