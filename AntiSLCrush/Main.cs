@@ -3,6 +3,7 @@ using LabApi.Features.Console;
 using LabApi.Features.Wrappers;
 using LabApi.Loader.Features.Plugins;
 using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
 namespace AntiSLCrush
@@ -14,6 +15,9 @@ namespace AntiSLCrush
         public override string Description => "AntiSLCrush";
         public override Version Version => new Version(2, 5, 1);
         public override Version RequiredApiVersion => new Version(1, 0, 2);
+
+        internal static HashSet<string> BannedIp = new HashSet<string>();
+        internal static HashSet<string> BannedHEX = new HashSet<string>();
 
         internal static Version PluginVersion;
 
@@ -39,6 +43,9 @@ namespace AntiSLCrush
 
         internal static void BanIpAtSystemLevel(string ip, string reason)
         {
+            if (BannedIp.Contains(ip))
+                return;
+
             Logger.Warn($"{ip} will be banned with iptables. Reason: {reason}");
 
             string command = $"iptables -A INPUT -s {ip} -j DROP";
@@ -60,6 +67,8 @@ namespace AntiSLCrush
                 {
                     Logger.Warn($"{ip} succesfully banned with IPTables! Reason: {reason}");
                     WebHook.Send($"{ip} succesfully banned with IPTables! Reason: {reason}");
+
+                    BannedIp.Add(ip);
                 }
                 else
                 {
@@ -75,10 +84,14 @@ namespace AntiSLCrush
 
         internal static void BanHexAtSystemLevel(string hex, string reason)
         {
+            if (BannedHEX.Contains(hex))
+                return;
+
             Logger.Warn($"{hex} will be banned with iptables. Reason: {reason}");
 
             int byteCount = hex.Length / 2;
-            int totalLength = 20 + 8 + byteCount;
+            int headerCount = config.AuthHexHeader.Length / 2;
+            int totalLength = 20 + 8 + headerCount + byteCount;
 
             if (hex.Length > 254)
                 hex = hex.Substring(0, 254);
@@ -104,6 +117,8 @@ namespace AntiSLCrush
                 {
                     Logger.Warn($"{hex} succesfully banned with IPTables! Length: {totalLength} Reason: {reason}");
                     WebHook.Send($"{hex} succesfully banned with IPTables! Length: {totalLength} Reason: {reason}");
+
+                    BannedHEX.Add(hex);
                 }
                 else
                 {

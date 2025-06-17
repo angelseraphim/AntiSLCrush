@@ -16,11 +16,18 @@ namespace AntiSLCrush.Patches
 
         private static bool Prefix(CustomLiteNetLib4MirrorTransport __instance, ConnectionRequest request)
         {
+            string ip = request.RemoteEndPoint.Address.ToString();
+
+            if (Main.BannedIp.Contains(ip))
+                return false;
+
             byte[] data = new byte[request.Data.AvailableBytes];
             Buffer.BlockCopy(request.Data._data, request.Data._position, data, 0, request.Data.AvailableBytes);
             string hex = BitConverter.ToString(data).Replace("-", "");
-            string ip = request.RemoteEndPoint.Address.ToString();
 
+            if (Main.BannedHEX.Contains(hex))
+                return false;
+            
             if (request.Data.AvailableBytes < 50)
             {
                 if (Main.config.ShowSuspiciousPacketLogs)
@@ -45,8 +52,12 @@ namespace AntiSLCrush.Patches
                 {
                     if (count > 20) //I'm too lazy to explain why this is necessary, but it is necessary.
                     {
-                        Main.BanHexAtSystemLevel(hex, "Too many HEX from same IP"); //Ну ладно, обьясню на русском. При входе игрок отправляет 2 раза разные HEX, и если одинаковых HEX много, то баним.
-                        Main.BanIpAtSystemLevel(ip, "Too many HEX from same IP");
+                        if (Main.config.BanHex)
+                            Main.BanHexAtSystemLevel(hex, "Too many HEX from same IP"); //Ну ладно, обьясню на русском. При входе игрок отправляет 2 раза разные HEX, и если одинаковых HEX много, то баним.
+                        
+                        if (Main.config.BanIp)
+                            Main.BanIpAtSystemLevel(ip, "Too many HEX from same IP");
+
                         return false;
                     }
 
