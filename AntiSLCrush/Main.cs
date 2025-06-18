@@ -13,7 +13,7 @@ namespace AntiSLCrush
         public override string Name => "AntiSLCrush";
         public override string Author => "angelseraphim.";
         public override string Description => "AntiSLCrush";
-        public override Version Version => new Version(2, 6, 0);
+        public override Version Version => new Version(2, 6, 1);
         public override Version RequiredApiVersion => new Version(1, 0, 2);
 
         internal static HashSet<string> BannedIp = new HashSet<string>();
@@ -82,15 +82,14 @@ namespace AntiSLCrush
             }
         }
 
-        internal static void BanHexAtSystemLevel(string hex, string reason)
+        internal static void BanHexAtSystemLevel(string hex, int dataLength, string reason)
         {
             if (BannedHEX.Contains(hex))
                 return;
 
-            Logger.Warn($"{hex} will be banned with iptables. Reason: {reason}");
+            int totalLength = dataLength + 28;
 
-            int byteCount = hex.Length / 2;
-            int totalLength = 20 + 8 + byteCount;
+            Logger.Warn($"{hex} will be banned with iptables. Reason: {reason}");
 
             if (hex.Length > 254)
                 hex = hex.Substring(0, 254);

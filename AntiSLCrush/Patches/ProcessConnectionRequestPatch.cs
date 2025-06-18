@@ -22,16 +22,12 @@ namespace AntiSLCrush.Patches
             if (Main.BannedIp.Contains(ip))
                 return false;
 
-            var dataField = typeof(NetDataReader).GetField("_data", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
             var dataSizeField = typeof(NetDataReader).GetField("_dataSize", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-
-            byte[] buffer = (byte[])dataField.GetValue(request.Data);
             int dataSize = (int)dataSizeField.GetValue(request.Data);
 
-            byte[] realData = new byte[dataSize];
-            Buffer.BlockCopy(buffer, 0, realData, 0, dataSize);
-
-            string hex = BitConverter.ToString(realData).Replace("-", "");
+            byte[] data = new byte[request.Data.AvailableBytes];
+            Buffer.BlockCopy(request.Data._data, request.Data._position, data, 0, request.Data.AvailableBytes);
+            string hex = BitConverter.ToString(data).Replace("-", "");
 
             if (Main.BannedHEX.Contains(hex))
                 return false;
@@ -43,7 +39,7 @@ namespace AntiSLCrush.Patches
 
                 if (Main.config.BanHex)
                 {
-                    Main.BanHexAtSystemLevel(hex, "Too short handshake packet");
+                    Main.BanHexAtSystemLevel(hex, dataSize, "Too short handshake packet");
                     return false;
                 }
 
@@ -61,7 +57,7 @@ namespace AntiSLCrush.Patches
                     if (count > 20) //I'm too lazy to explain why this is necessary, but it is necessary.
                     {
                         if (Main.config.BanHex)
-                            Main.BanHexAtSystemLevel(hex, "Too many HEX from same IP"); //Ну ладно, обьясню на русском. При входе игрок отправляет 2 раза разные HEX, и если одинаковых HEX много, то баним.
+                            Main.BanHexAtSystemLevel(hex, dataSize, "Too many HEX from same IP"); //Ну ладно, обьясню на русском. При входе игрок отправляет 2 раза разные HEX, и если одинаковых HEX много, то баним.
                         
                         if (Main.config.BanIp)
                             Main.BanIpAtSystemLevel(ip, "Too many HEX from same IP");
@@ -86,7 +82,7 @@ namespace AntiSLCrush.Patches
                     WebHook.Send($"@everyone Suspicious packet filtered from {ip}! Please inform the plugin author about this data: {hex}");
 
                     if (Main.config.BanHex)
-                        Main.BanHexAtSystemLevel(hex, "Same HEX from other IP");
+                        Main.BanHexAtSystemLevel(hex, dataSize, "Same HEX from other IP");
                 }
 
                 FilteredConnectionCount++;
