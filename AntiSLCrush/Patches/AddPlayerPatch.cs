@@ -11,6 +11,9 @@ namespace AntiSLCrush.Patches
 
         private static void Prefix(ReferenceHub referenceHub)
         {
+            if (referenceHub == null)
+                return;
+
             if (Player.Dictionary.ContainsKey(referenceHub))
             {
                 Count++;
