@@ -34,7 +34,7 @@
   <ItemGroup>
     <Reference Include="0Harmony, Version=2.2.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\OneDrive\Рабочий стол\Important\SCPSL-DLLs\ExMod-9.6.X\0Harmony.dll</HintPath>
+      <HintPath>..\..\..\..\..\OneDrive\Рабочий стол\Important\SCPSL-DLLs\Other\0Harmony.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp-firstpass, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -83,12 +83,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands\Info.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Patches\BroadcastToConnectionPatch.cs" />
     <Compile Include="Patches\AddPlayerPatch.cs" />
-    <Compile Include="Patches\NetPeerPatch.cs" />
-    <Compile Include="Patches\NetPacketPatch.cs" />
+    <Compile Include="Patches\FpcMotorPatch.cs" />
     <Compile Include="Patches\OnTransportDataPath.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Patches\PopulateDummyActionsPatch.cs" />

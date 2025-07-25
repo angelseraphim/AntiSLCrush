@@ -1,10 +1,11 @@
 ﻿using HarmonyLib;
-using LabApi.Features.Console;
 using LabApi.Features.Wrappers;
 using LabApi.Loader.Features.Plugins;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using UnityEngine;
+using Logger = LabApi.Features.Console.Logger;
 
 namespace AntiSLCrush
 {
@@ -13,7 +14,7 @@ namespace AntiSLCrush
         public override string Name => "AntiSLCrush";
         public override string Author => "angelseraphim.";
         public override string Description => "AntiSLCrush";
-        public override Version Version => new Version(2, 6, 2);
+        public override Version Version => new Version(2, 7, 0);
         public override Version RequiredApiVersion => new Version(1, 0, 2);
 
         internal static HashSet<string> BannedIp = new HashSet<string>();
@@ -39,6 +40,20 @@ namespace AntiSLCrush
 
             config = null;
             harmony = null;
+        }
+
+        internal static void Log(string message, bool isError = false)
+        {
+            Debug.LogWarning(message);
+
+            if (isError)
+            {
+                Logger.Error(message);
+            }
+            else
+            {
+                Logger.Debug(message, config.Debug);
+            }
         }
 
         internal static void BanIpAtSystemLevel(string ip, string reason)
