@@ -36,25 +36,29 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\OneDrive\Рабочий стол\Important\SCPSL-DLLs\Other\0Harmony.dll</HintPath>
     </Reference>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>..\..\..\..\..\OneDrive\Рабочий стол\Important\SCPSL-DLLs\SCP Secret Laboratory-14.0.0\Assembly-CSharp.dll</HintPath>
+    </Reference>
     <Reference Include="Assembly-CSharp-firstpass, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\OneDrive\Рабочий стол\Important\SCPSL-DLLs\SCP Secret Laboratory-14.0.0\Assembly-CSharp-firstpass.dll</HintPath>
     </Reference>
-    <Reference Include="Assembly-CSharp-Publicized">
-      <HintPath>..\..\..\..\..\OneDrive\Рабочий стол\Important\SCPSL-DLLs\SCP Secret Laboratory-14.0.0\Assembly-CSharp-Publicized.dll</HintPath>
+    <Reference Include="Assembly-CSharp_publicized, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\OneDrive\Рабочий стол\Important\SCPSL-DLLs\SCP Secret Laboratory-14.0.0\Assembly-CSharp_publicized.dll</HintPath>
     </Reference>
     <Reference Include="CommandSystem.Core, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\OneDrive\Рабочий стол\Important\SCPSL-DLLs\SCP Secret Laboratory-14.0.0\CommandSystem.Core.dll</HintPath>
     </Reference>
-    <Reference Include="LabApi_publicized">
-      <HintPath>..\..\..\..\..\OneDrive\Рабочий стол\Important\SCPSL-DLLs\Other\LabApi_publicized.dll</HintPath>
+    <Reference Include="LabApi">
+      <HintPath>..\..\..\..\..\OneDrive\Рабочий стол\Important\SCPSL-DLLs\SCP Secret Laboratory-14.0.0\LabApi.dll</HintPath>
     </Reference>
     <Reference Include="Mirror_publicized, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\OneDrive\Рабочий стол\Important\SCPSL-DLLs\Other\Mirror_publicized.dll</HintPath>
     </Reference>
-    <Reference Include="NorthwoodLib, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="NorthwoodLib, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\OneDrive\Рабочий стол\Important\SCPSL-DLLs\SCP Secret Laboratory-14.0.0\NorthwoodLib.dll</HintPath>
     </Reference>
@@ -85,11 +89,9 @@
   <ItemGroup>
     <Compile Include="Config.cs" />
     <Compile Include="Patches\BroadcastToConnectionPatch.cs" />
-    <Compile Include="Patches\AddPlayerPatch.cs" />
     <Compile Include="Patches\FpcMotorPatch.cs" />
     <Compile Include="Patches\OnTransportDataPath.cs" />
     <Compile Include="Main.cs" />
-    <Compile Include="Patches\PopulateDummyActionsPatch.cs" />
     <Compile Include="Patches\PreAuthenticatedPatch.cs" />
     <Compile Include="Patches\ProcessConnectionRequestPatch.cs" />
     <Compile Include="Patches\RejectPatch.cs" />

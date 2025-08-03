@@ -14,13 +14,11 @@ namespace AntiSLCrush
         public override string Name => "AntiSLCrush";
         public override string Author => "angelseraphim.";
         public override string Description => "AntiSLCrush";
-        public override Version Version => new Version(2, 7, 0);
-        public override Version RequiredApiVersion => new Version(1, 0, 2);
+        public override Version Version => new Version(2, 7, 1);
+        public override Version RequiredApiVersion => new Version(1, 1, 1);
 
         internal static HashSet<string> BannedIp = new HashSet<string>();
         internal static HashSet<string> BannedHEX = new HashSet<string>();
-
-        internal static Version PluginVersion;
 
         internal static Config config;
         private static Harmony harmony;
@@ -28,7 +26,6 @@ namespace AntiSLCrush
         public override void Enable()
         {
             config = Config;
-            PluginVersion = Version;
             harmony = new Harmony(Name);
 
             harmony.PatchAll();
