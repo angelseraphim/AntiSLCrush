@@ -95,6 +95,7 @@
     <Compile Include="Patches\PreAuthenticatedPatch.cs" />
     <Compile Include="Patches\ProcessConnectionRequestPatch.cs" />
     <Compile Include="Patches\RejectPatch.cs" />
+    <Compile Include="Patches\ReserveAmmoSyncUpdateDeltaPatch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebHook.cs" />
   </ItemGroup>
