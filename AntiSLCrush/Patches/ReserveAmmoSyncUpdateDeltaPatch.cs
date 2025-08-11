@@ -15,22 +15,22 @@ namespace AntiSLCrush.Patches
         {
             foreach (AutosyncItem instance in AutosyncItem.Instances)
             {
-                if (!ReserveAmmoSync.TryUnpack(instance, out var owner, out var ammoType))
+                if (!TryUnpack(instance, out ReferenceHub owner, out ItemType ammoType))
                     continue;
 
-                if (owner == null || owner.gameObject == null)
+                if (owner == null)
+                {
+                    Main.Log("[ReserveAmmoSyncUpdateDeltaPatch] Null");
                     continue;
+                }
 
                 int curAmmo = owner.inventory.GetCurAmmo(ammoType);
-
-                LastSent orAdd = ReserveAmmoSync.ServerLastSent.GetOrAdd(owner, () => new LastSent());
-
+                LastSent orAdd = ServerLastSent.GetOrAdd(owner, () => new LastSent());
                 if (orAdd.AmmoCount != curAmmo || orAdd.AmmoType != ammoType)
                 {
                     orAdd.AmmoType = ammoType;
                     orAdd.AmmoCount = curAmmo;
-                    new ReserveAmmoMessage(owner, ammoType)
-                        .SendToHubsConditionally(x => x.roleManager.CurrentRole is SpectatorRole);
+                    new ReserveAmmoMessage(owner, ammoType).SendToHubsConditionally((ReferenceHub x) => x.roleManager.CurrentRole is SpectatorRole);
                 }
             }
 
