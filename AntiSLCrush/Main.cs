@@ -14,7 +14,7 @@ namespace AntiSLCrush
         public override string Name => "AntiSLCrush";
         public override string Author => "angelseraphim.";
         public override string Description => "AntiSLCrush";
-        public override Version Version => new Version(2, 8, 0);
+        public override Version Version => new Version(2, 8, 1);
         public override Version RequiredApiVersion => new Version(1, 1, 1);
 
         internal static HashSet<string> BannedIp = new HashSet<string>();
@@ -90,7 +90,8 @@ namespace AntiSLCrush
             }
             else
             {
-                Logger.Warn($"Not linux: {RuntimeInformation.OSDescription}");
+                Logger.Error($"[IP BAN] Unable to block IP because your OS is not Linux kernel. Please set ban_ip and ban_hex to false, or install OS with Linux kernel. Your current OS: {RuntimeInformation.OSDescription}");
+                WebHook.Send($"[IP BAN] Unable to block IP because your OS is not Linux kernel. Please set ban_ip and ban_hex to false, or install OS with Linux kernel. Your current OS: {RuntimeInformation.OSDescription}");
             }
         }
 
@@ -138,7 +139,8 @@ namespace AntiSLCrush
             }
             else
             {
-                Logger.Warn($"Not linux: {RuntimeInformation.OSDescription}");
+                Logger.Error($"[HEX BAN] Unable to block HEX because your OS is not Linux kernel. Please set ban_ip and ban_hex to false, or install OS with Linux kernel. Your current OS: {RuntimeInformation.OSDescription}");
+                WebHook.Send($"[HEX BAN] Unable to block HEX because your OS is not Linux kernel. Please set ban_ip and ban_hex to false, or install OS with Linux kernel. Your current OS: {RuntimeInformation.OSDescription}");
             }
         }
     }
