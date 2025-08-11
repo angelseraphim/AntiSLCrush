@@ -14,7 +14,7 @@ namespace AntiSLCrush
         public override string Name => "AntiSLCrush";
         public override string Author => "angelseraphim.";
         public override string Description => "AntiSLCrush";
-        public override Version Version => new Version(2, 7, 1);
+        public override Version Version => new Version(2, 8, 0);
         public override Version RequiredApiVersion => new Version(1, 1, 1);
 
         internal static HashSet<string> BannedIp = new HashSet<string>();
